@@ -6,5 +6,5 @@ read papers!!! done
 
 
 Start project try to sync duild by the end of the day the agent which will work no fine-tuning today.
- 1) get data for python
+ 1) get data for python !!  done
  2) start coding.

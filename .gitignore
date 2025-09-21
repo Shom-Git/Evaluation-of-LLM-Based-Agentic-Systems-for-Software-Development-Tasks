@@ -1,2 +1,4 @@
 workflow_data/
 data/
+.idea/
+.env/

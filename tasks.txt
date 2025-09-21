@@ -8,3 +8,11 @@ read papers!!! done
 Start project try to sync duild by the end of the day the agent which will work no fine-tuning today.
  1) get data for python !!  done
  2) start coding.
+    describe nodes and build simple fix_agent (run through and see logs) !! done skeleton agent got buggy_code nad tests
+    llm mode just copied and returred cndidate code(just buggy_code) and passed false log and no sandbox yet
+
+Coding later:
+    1)turn on LLM
+    2)turn on real test run and sandbox for tests in Docker
+    3)ReAct (desicion node)
+    4)Eval

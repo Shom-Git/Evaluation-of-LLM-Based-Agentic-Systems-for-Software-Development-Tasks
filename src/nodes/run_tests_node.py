@@ -1,15 +1,16 @@
-from typing import Dict, Any
+from typing import Dict
+from nodes.sandbox_runner import run_in_sandbox
+import os
 
+SANDBOX_DIR = "/home/coder/project/experiments/sandbox_outputs"
 
-def run_tests_node(state: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Executes candidate_code with tests inside sandbox.
-    Currently a stub returning a fake result.
-    """
-    candidate_code = state.get("candidate_code", "")
-    tests = state.get("tests", "")
+def run_tests_node(state: Dict) -> Dict:
+    os.makedirs(SANDBOX_DIR, exist_ok=True)
+    candidate_file = os.path.join(SANDBOX_DIR, "candidate_temp.py")
 
-    # TODO: Implement pytest execution inside sandbox
-    result = {"passed": False, "log": "sandbox not implemented yet"}
+    with open(candidate_file, "w") as f:
+        f.write(state["candidate_code"] + "\n" + state.get("tests", ""))
 
-    return {**state, "test_result": result}
+    result = run_in_sandbox(candidate_file)
+    return {**state, "test_result": result, "candidate_file": candidate_file}
+

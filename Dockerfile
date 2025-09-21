@@ -1,1 +1,0 @@
-# для executor (sandbox)

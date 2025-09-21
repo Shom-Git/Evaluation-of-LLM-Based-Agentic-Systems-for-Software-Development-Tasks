@@ -12,7 +12,9 @@ Start project try to sync duild by the end of the day the agent which will work 
     llm mode just copied and returred cndidate code(just buggy_code) and passed false log and no sandbox yet
 
 Coding later:
-    1)turn on LLM
-    2)turn on real test run and sandbox for tests in Docker
-    3)ReAct (desicion node)
+    1)turn on LLM    done
+    2)turn on real test run and sandbox for tests in Docker   done
+    3)ReAct (desicion node)  done
     4)Eval
+
+Все вкрутил но пока все работает оч плохо завтра попробовать поиграться с моделями кодом промптами

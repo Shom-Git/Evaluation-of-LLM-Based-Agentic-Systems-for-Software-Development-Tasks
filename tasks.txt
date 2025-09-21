@@ -2,4 +2,9 @@ create a env and set up git with platform сделанно
 
 check the project and try to go thougt the project
 
-read papers!!!
+read papers!!! done 
+
+
+Start project try to sync duild by the end of the day the agent which will work no fine-tuning today.
+ 1) get data for python
+ 2) start coding.

@@ -13,7 +13,12 @@ if __name__ == "__main__":
         tests = "assert mul(2,3)==6"
         st = run_fix_agent_for_example(buggy, tests, "demo")
         print("Final:", st["final_status"])
-        print("History:", st["history"])
+        print("Attempts and reasoning:")
+        for h in st["history"]:
+            print(f"Attempt {h['attempt']} - Passed: {h['passed']}")
+            print("Error log:")
+            print(h["log"])
+            print("---")
     else:
         if not a.data:
             raise SystemExit("Need --data for batch")

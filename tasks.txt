@@ -13,8 +13,16 @@ Start project try to sync duild by the end of the day the agent which will work 
 
 Coding later:
     1)turn on LLM    done
-    2)turn on real test run and sandbox for tests in Docker   done
+    2)turn on real test run and sandbox for tests in Docker   done/ mot done
     3)ReAct (desicion node)  done
     4)Eval
 
 Все вкрутил но пока все работает оч плохо завтра попробовать поиграться с моделями кодом промптами
+ write etier system for correcting normaly works
+ easy code running 
+ search for models such that already good quality(explain why whese or that model) ps read papers
+ ask for adviced about fine-tuning. Have 3 days 
+
+
+    Finally some reasonable resylt of the React work after promt correction.
+    next to try to test on subset of HumanEvalPack if not good get more data and fine-tune

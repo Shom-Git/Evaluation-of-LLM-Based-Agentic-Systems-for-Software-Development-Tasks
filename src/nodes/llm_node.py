@@ -1,13 +1,18 @@
+
 import re
 from typing import Dict, List
-from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
+from transformers import pipeline
 
 MODEL_ID = "Qwen/Qwen3-0.6B"
 
-# Load tokenizer and model (on GPU if available)
-tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
-model = AutoModelForCausalLM.from_pretrained(MODEL_ID, device_map="auto")
+# Use Hugging Face pipeline for chat models
+pipe = pipeline(
+    "text-generation",
+    model=MODEL_ID,
+    dtype=torch.bfloat16,
+    device_map="auto"
+)
 
 
 def build_prompt(buggy_code: str, tests: str, history: List[Dict]) -> str:
@@ -15,38 +20,30 @@ def build_prompt(buggy_code: str, tests: str, history: List[Dict]) -> str:
     Build the text prompt that will be sent to the LLM.
     Includes buggy code, tests, and results of previous attempts.
     """
-    history_txt = []
+    # Build chat-style messages for the pipeline
+    system_content = (
+        "You are a professional Python developer. "
+        "You write fully working Python code, even for small models, "
+        "and you clearly explain any bugs in the code. "
+        "Always provide executable code first, then a brief explanation of the bug and the fix."
+    )
+    user_content = (
+        f"Here is a Python function that contains a bug:\n\n{buggy_code}\n\n"
+        "Please do the following:\n"
+        "1. Correct the code so it works as intended.\n"
+        "2. Provide the corrected, fully executable code first.\n"
+        "3. After the code, write a short explanation of what was wrong and how you fixed it.\n"
+        "Only modify the code as necessary."
+    )
+    # Optionally, add history and error logs to user_content for multi-step reasoning
     if history:
         for h in history:
-            status = "PASSED" if h["passed"] else "FAILED"
-            log = h["log"].splitlines()[:3]  # take first 3 lines of log
-            history_txt.append(f"Attempt {h['attempt']}: {status}\n" + "\n".join(log))
-    else:
-        history_txt.append("No previous attempts.")
-
-    # Собираем полный промпт с историей
-    history_section = "\n".join(history_txt)
-    
-    return f"""You are a Python expert.
-Fix the buggy code so that it passes the tests.
-
-Buggy code:
-```python
-{buggy_code}
-```
-
-Tests:
-```python
-{tests}
-```
-
-History:
-{history_section}
-
-Output ONLY the fixed function inside a Python code block:
-```python
-<your_code_here>
-```"""
+            user_content += f"\n\nAttempt {h['attempt']} - Passed: {h['passed']}\nCandidate code:\n{h.get('candidate_code','')}\nError log:\n{h['log']}\n"
+    messages = [
+        {"role": "system", "content": system_content},
+        {"role": "user", "content": user_content}
+    ]
+    return messages
 
 
 def extract_code(output: str, prompt: str) -> str:
@@ -82,19 +79,11 @@ def llm_node(state: Dict) -> Dict:
     Takes current agent state, builds prompt, calls model,
     and extracts candidate fixed code.
     """
-    prompt = build_prompt(state["buggy_code"], state["tests"], state.get("history", []))
-
-    # Encode prompt
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-
-    # Run generation
-    out = model.generate(**inputs, max_new_tokens=512, do_sample=False)
-
-    # Decode and extract candidate code
-    decoded = tokenizer.decode(out[0], skip_special_tokens=True)
+    messages = build_prompt(state["buggy_code"], state["tests"], state.get("history", []))
+    prompt = pipe.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    outputs = pipe(prompt, max_new_tokens=512, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
+    decoded = outputs[0]["generated_text"]
     candidate = extract_code(decoded, prompt)
-
-    # Return updated state
     return {**state, "candidate_code": candidate, "llm_raw_output": decoded}
 
 

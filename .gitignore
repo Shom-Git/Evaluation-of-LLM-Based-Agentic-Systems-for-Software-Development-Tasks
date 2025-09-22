@@ -3,3 +3,5 @@ data/
 .idea/
 .env/
 experiments/
+.vscode/
+__pycache__/

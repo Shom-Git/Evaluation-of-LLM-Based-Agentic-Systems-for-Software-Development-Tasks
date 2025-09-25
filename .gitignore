@@ -5,3 +5,7 @@ data/
 experiments/
 .vscode/
 __pycache__/
+qwen_code_checkpoints/
+
+src/qwen_check.py
+src/llama_check.py

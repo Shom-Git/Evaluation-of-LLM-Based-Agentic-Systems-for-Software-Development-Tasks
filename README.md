@@ -154,7 +154,7 @@ Evaluate on multiple tasks with comprehensive metrics:
 **Option 1: Command Line Arguments**
 ```bash
 # Evaluate specific task range
-python src/cli.py --mode batch --task-range 40-60 --max-attempts 3
+python src/cli.py --mode batch --task-range 0-30 --max-attempts 3
 
 # Evaluate first N tasks
 python src/cli.py --mode batch --max-tasks 20 --max-attempts 3
@@ -167,7 +167,7 @@ python src/cli.py --mode batch --max-attempts 3
 ```bash
 python src/cli.py --mode batch
 # Then choose:
-# 1. Specify task range (e.g., 40-60)
+# 1. Specify task range (e.g., 0-30)
 # 2. Specify max tasks
 # 3. Full dataset
 ```
@@ -280,69 +280,45 @@ DEVICE = "cpu"
 
 ```
 Evaluation-of-LLM-Based-Agentic-Systems-for-Software-Development-Tasks/
-├── README.md                      # 📖 This documentation
-├── environment.yml               # 📦 Python dependencies
-├── test_fixes.py                  # 🧪 System verification script
-├── FILES_TO_DELETE.md            # 🗑️ Cleanup instructions
+├── README.md                      #  This documentation
+├── environment.yml               #  Python which I had
+├── test_fixes.py                  #  System verification script
 ├── data/
-│   ├── get_data.py               # 📥 Dataset download utility
-│   └── humanevalpack_python.jsonl # 📊 HumanEvalFix dataset
+│   ├── get_data.py               #  Dataset download utility
+│   └── humanevalpack_python.jsonl #  HumanEvalFix dataset
 └── src/
-    ├── cli.py                    # 🎮 Main command-line interface
-    ├── config.py                 # ⚙️ System configuration
+    ├── cli.py                    #  Main command-line interface
+    ├── config.py                 #  System configuration
     ├── core/
-    │   └── state.py             # 📊 State management classes
+    │   └── state.py             #  State management classes
     ├── workflows/
-    │   └── main_agent.py        # 🤖 Main orchestration workflow
+    │   └── main_agent.py        #  Main orchestration workflow
     └── nodes/
-        ├── analysis_node.py      # 🔍 Code analysis with AST parsing
-        ├── strategy_node.py      # 🎯 Strategy selection logic
-        ├── rule_based_generator.py # 📏 Deterministic bug fixes
-        ├── llm_generator_node.py # 🧠 LLM-guided code generation
-        ├── test_execution_node.py # 🧪 Sandboxed test execution
-        ├── sandbox_runner.py     # 🔒 Safe execution environment
-        └── utils.py             # 🛠️ Utility functions
+        ├── analysis_node.py      #  Code analysis with AST parsing
+        ├── strategy_node.py      #  Strategy selection logic
+        ├── rule_based_generator.py #  Deterministic bug fixes
+        ├── llm_generator_node.py #  LLM-guided code generation
+        ├── test_execution_node.py #  Sandboxed test execution
+        ├── sandbox_runner.py     #  Safe execution environment
+        └── utils.py             #  Utility functions
 ```
 
-## 🧹 **File Cleanup**
-
-To clean up obsolete files from development, see `FILES_TO_DELETE.md` for detailed instructions on which files can be safely removed.
-
-## 🤝 **Contributing**
-
-We welcome contributions! Please:
-
-1. **Fork** the repository
-2. **Create** a feature branch: `git checkout -b feature/amazing-feature`
-3. **Commit** your changes: `git commit -m 'Add amazing feature'`
-4. **Push** to the branch: `git push origin feature/amazing-feature`
-5. **Open** a Pull Request
 
 ## 📝 **License**
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 **Acknowledgments**
-
-- **HumanEvalFix Dataset**: For providing comprehensive buggy code scenarios
-- **StarCoder2**: For the powerful code generation capabilities
-- **LangGraph**: For the workflow orchestration framework
-- **Hugging Face**: For the transformer models and infrastructure
 
 ## 📞 **Support**
 
 If you encounter issues or have questions:
 
-1. **Check** the `FILES_TO_DELETE.md` for cleanup guidance
-2. **Run** `python test_fixes.py` for system verification
-3. **Create** a GitHub issue with detailed information
-4. **Include** system specs, error logs, and reproduction steps
+1. **Run** `python test_fixes.py` for system verification
+2. **Create** a GitHub issue with detailed information
+3. **Include** system specs, error logs, and reproduction steps
 
 ---
 
-**Built with ❤️ for the software development community**
-
-*This project represents a significant step forward in automated debugging and code repair, combining the best of rule-based systems with modern AI capabilities.*
 
 ## Advanced Usage
 

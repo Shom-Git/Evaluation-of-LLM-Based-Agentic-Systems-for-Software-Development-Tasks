@@ -82,20 +82,12 @@ cd Evaluation-of-LLM-Based-Agentic-Systems-for-Software-Development-Tasks
 2. **Create Virtual Environment**
 ```bash
 # Using conda (recommended)
-conda create -n agent-env python=3.10
-conda activate agent-env
-
-# Or using venv
-python -m venv agent-env
-# Windows:
-agent-env\Scripts\activate
-# Linux/Mac:
-source agent-env/bin/activate
+conda env create -f environment.yml
 ```
 
 3. **Install Dependencies**
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.txt they are alredy set with the above comand
 ```
 
 4. **GPU Setup** *(Manual Configuration Required)*
